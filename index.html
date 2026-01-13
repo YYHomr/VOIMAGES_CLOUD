@@ -2,40 +2,44 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Keyword Image Viewer</title>
+  <title>Image Viewer</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
-    body {
+    html, body {
       margin: 0;
-      background: #0e0f1a;
-      color: white;
-      font-family: system-ui;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      height: 100vh;
-      text-align: center;
+      height: 100%;
+      width: 100%;
+      overflow: hidden;
+      background: black;
     }
-    img { max-width: 90%; border-radius: 12px; box-shadow: 0 20px 50px rgba(0,0,0,0.5); }
-    h1 { text-transform: capitalize; margin-bottom: 12px; opacity: 0.85; }
+
+    img {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;  /* makes it fill screen without stretching */
+    }
   </style>
 </head>
 <body>
 
-<h1 id="title"></h1>
 <img id="image" />
 
 <script>
   const query = window.location.pathname.replace("/", "").trim() || "dog";
-  document.getElementById("title").textContent = query;
 
   fetch(`/api/image?q=${encodeURIComponent(query)}`)
     .then(res => res.json())
     .then(data => {
-      if (data.image) document.getElementById("image").src = data.image;
-      else document.getElementById("title").textContent = "No image found";
+      if (data.image) {
+        document.getElementById("image").src = data.image;
+      } else {
+        document.body.style.background = "gray";
+      }
     })
-    .catch(() => document.getElementById("title").textContent = "Error loading image");
+    .catch(() => document.body.style.background = "red");
 </script>
 
 </body>
