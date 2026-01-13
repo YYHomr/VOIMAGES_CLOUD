@@ -2,15 +2,16 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Image Viewer</title>
+  <title>Keyword Image Viewer</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
     html, body {
       margin: 0;
-      height: 100%;
+      padding: 0;
       width: 100%;
+      height: 100%;
       overflow: hidden;
-      background: black;
+      background: black; /* fallback background */
     }
 
     img {
@@ -19,7 +20,7 @@
       left: 0;
       width: 100%;
       height: 100%;
-      object-fit: cover;  /* makes it fill screen without stretching */
+      object-fit: cover; /* fills screen without distortion */
     }
   </style>
 </head>
@@ -36,10 +37,10 @@
       if (data.image) {
         document.getElementById("image").src = data.image;
       } else {
-        document.body.style.background = "gray";
+        document.body.style.background = "gray"; // fallback if no image
       }
     })
-    .catch(() => document.body.style.background = "red");
+    .catch(() => document.body.style.background = "red"); // fallback on error
 </script>
 
 </body>
